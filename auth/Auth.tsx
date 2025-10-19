@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../services/supabaseService';
 import { TEXTS } from '../constants/strings';
+import { EyeIcon, EyeSlashIcon } from '../components/Icons';
 
 const AuthContainer: React.FC<{ children: React.ReactNode; title: string; subtitle: string }> = ({ children, title, subtitle }) => (
     <div className="w-full max-w-md mx-auto bg-background-light shadow-2xl rounded-2xl p-8">
@@ -19,6 +20,7 @@ const Auth: React.FC = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState<'success' | 'error' | null>(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleAuthAction = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -88,15 +90,29 @@ const Auth: React.FC = () => {
                     <label htmlFor="password" className="block text-sm font-medium text-text-secondary mb-2">
                         {TEXTS.AUTH.PASSWORD_LABEL}
                     </label>
-                    <input
-                        id="password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        placeholder={TEXTS.AUTH.PASSWORD_PLACEHOLDER}
-                        className="w-full bg-background-dark text-text-primary border border-background-lighter rounded-md p-2 focus:ring-2 focus:ring-brand-primary focus:border-brand-primary"
-                    />
+                    <div className="relative">
+                        <input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            placeholder={TEXTS.AUTH.PASSWORD_PLACEHOLDER}
+                            className="w-full bg-background-dark text-text-primary border border-background-lighter rounded-md p-2 pr-10 focus:ring-2 focus:ring-brand-primary focus:border-brand-primary"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-text-muted hover:text-text-primary transition-colors"
+                            aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                        >
+                            {showPassword ? (
+                                <EyeSlashIcon className="w-5 h-5" />
+                            ) : (
+                                <EyeIcon className="w-5 h-5" />
+                            )}
+                        </button>
+                    </div>
                 </div>
                 <div>
                     <button
