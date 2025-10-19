@@ -7,9 +7,10 @@ import { supabase } from '../services/supabaseService';
 interface SidebarProps {
     currentPage: Page;
     setCurrentPage: (page: Page) => void;
+    userEmail: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, userEmail }) => {
     const navItems = [
         { id: 'dataEntry', label: TEXTS.SIDEBAR.NAV_DATA_ENTRY, icon: <PlusCircleIcon className="w-6 h-6" /> },
         { id: 'list', label: TEXTS.SIDEBAR.NAV_LIST, icon: <ListBulletIcon className="w-6 h-6" /> },
@@ -25,6 +26,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage }) => {
             <div>
                 <header className="px-3 mb-8">
                     <h1 className="text-2xl font-bold text-text-primary tracking-tight">{TEXTS.SIDEBAR.TITLE}</h1>
+                    <p className="text-sm text-text-muted mt-2 truncate" title={userEmail}>
+                        {userEmail}
+                    </p>
                 </header>
                 <nav className="flex flex-col space-y-2">
                     {navItems.map(item => (

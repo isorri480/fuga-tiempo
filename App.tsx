@@ -70,7 +70,7 @@ const App: React.FC = () => {
                 />
             )}
 
-            <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} userEmail={session.user.email || ''} />
 
             <main className="flex-grow p-4 md:p-8 overflow-auto flex items-center justify-center">
                 {renderPage()}
